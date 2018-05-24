@@ -22,5 +22,5 @@ class UserQuery(graphene.ObjectType):
     user = graphene.Node.Field(UserObject)
     users = DjangoConnectionField(UserObject)
 
-    def resolve_users(self):
+    def resolve_users(self, info, **kwargs):
         return User.objects.all().select_related('profile')
