@@ -30,7 +30,7 @@ class Feed(models.Model):
             feeds = Feed.objects.filter(parent=None, id__lte=from_feed)
         else:
             feeds = Feed.objects.filter(parent=None)
-        return feeds
+        return feeds.prefetch_related('user__profile')
 
     @staticmethod
     def get_feeds_after(feed):

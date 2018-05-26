@@ -19,3 +19,20 @@ class FeedQuery(graphene.ObjectType):
         return Feed.objects.select_related(
             'user', 'user__profile'
         ).prefetch_related('feed_set').filter(parent=None)
+
+
+class FeedInput(graphene.InputObjectType):
+    post = graphene.String(required=True)
+
+
+class CreateFeed(graphene.Mutation):
+    class Arguments:
+        feed = FeedInput(required=True)
+
+    ok = graphene.Boolean()
+    feed = graphene.Field(lambda: FeedObject)
+
+    @staticmethod
+    def mutate(root, info, feed):
+        feed = Feed.objects.create(user=info.context.user, post=feed.post)
+        return CreateFeed(feed=feed, ok=True)

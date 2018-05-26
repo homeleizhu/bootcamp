@@ -53,13 +53,14 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'bootcamp.middleware.JWTAuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'bootcamp.urls'
@@ -190,14 +191,14 @@ LOGGING = {
     },
 }
 
-CORS_URLS_REGEX = '^/graphql.*$'
-CORS_ORIGIN_ALLOW_ALL = True
-
 # Where your Graphene schema lives
 
 GRAPHENE = {
     'SCHEMA': 'bootcamp.schema.schema'
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = '^/graphql.*$'
 
 if 'SENTRY_DSN' in os.environ:
     INSTALLED_APPS += ['raven.contrib.django.raven_compat']
