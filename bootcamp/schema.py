@@ -1,15 +1,16 @@
 import graphene
 
-from .feeds.schema import FeedQuery, CreateFeed
+from .feeds.schema import FeedQuery, CreateFeed, LikeFeed
 from .authentication.schema import UserQuery, CreateToken
 
 
 class Query(FeedQuery, UserQuery, graphene.ObjectType):
-    pass
+    node = graphene.Node.Field()
 
 
 class Mutations(graphene.ObjectType):
     create_feed = CreateFeed.Field()
+    like_feed = LikeFeed.Field()
     create_token = CreateToken.Field()
 
 

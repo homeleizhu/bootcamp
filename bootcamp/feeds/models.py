@@ -73,3 +73,23 @@ class Feed(models.Model):
 
     def linkfy_post(self):
         return bleach.linkify(escape(self.post))
+
+    @classmethod
+    def like(cls, feed_id, user):
+        feed = Feed.objects.get(pk=feed_id)
+        like = Activity.objects.filter(
+            activity_type=Activity.LIKE, feed=feed_id, user=user)
+
+        if like:
+            user.profile.unotify_liked(feed)
+            like.delete()
+        else:
+            Activity.objects.create(
+                feed=feed_id,
+                user=user,
+                activity_type=Activity.LIKE
+            )
+            user.profile.notify_liked(feed)
+
+        feed.calculate_likes()
+        return feed

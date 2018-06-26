@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from bootcamp.decorators import ajax_required
-from bootcamp.activities.models import Activity
 
 from .models import Feed
 
@@ -131,22 +130,8 @@ def like(request):
     user = request.user
     feed_id = request.POST['feed']
 
-    feed = Feed.objects.get(pk=feed_id)
-    like = Activity.objects.filter(
-        activity_type=Activity.LIKE, feed=feed_id, user=user)
-
-    if like:
-        user.profile.unotify_liked(feed)
-        like.delete()
-    else:
-        Activity.objects.create(
-            feed=feed_id,
-            user=user,
-            activity_type=Activity.LIKE
-        )
-        user.profile.notify_liked(feed)
-
-    return HttpResponse(feed.calculate_likes())
+    feed = Feed.like(feed_id, user)
+    return HttpResponse(feed.likes)
 
 
 @login_required
