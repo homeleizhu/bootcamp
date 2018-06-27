@@ -28,7 +28,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install flake8
-            pip install -r requirements.txt
+            pip install -U -r requirements.txt
 
       - save_cache:
           paths:
