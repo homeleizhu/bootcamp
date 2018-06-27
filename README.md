@@ -11,17 +11,14 @@ Bootcamp is an open source **social network** built with [Python][0] using the [
 ![](http://i.imgur.com/pGS1kRd.png)
 
 ## Fork Features
+* GraphQL support
 * Add unittest and show coverage
 * Migrate from Python 2 to Python 3.6
 * Code style pep8 format
-* Add [Travi CI][3] auto test and deploy to [heroku][4]
 * Change allow guest user access
 * Internationalization add Chinese support
 * Upgrade Django to lastest version
-
-## Doing
-* Add cache optimization
-* Optimization search
+* Add [Travi CI][3] auto test and deploy to [heroku][4]
 
 ## Install Guide
 ```bash
