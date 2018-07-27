@@ -14,9 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls import include
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 
@@ -25,26 +28,28 @@ from .core import views as core_views
 from .search import views as search_views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^i18n/', include('django.conf.urls.i18n', namespace='i18n')),
+    path('admin/', admin.site.urls),
 
-    url(r'^$', core_views.home, name='home'),
-    url(r'^login', auth_views.login,
-        {'template_name': 'core/cover.html'}, name='login'),
-    url(r'^logout', auth_views.logout, {'next_page': '/'}, name='logout'),
-    url(r'^signup/$', authentication_views.signup, name='signup'),
+    path('', core_views.home, name='home'),
+    path('login', auth_views.login,
+         {'template_name': 'core/cover.html'}, name='login'),
+    path('logout', auth_views.logout, {'next_page': '/'}, name='logout'),
+    path('signup/$', authentication_views.signup, name='signup'),
 
-    url(r'^feeds/', include('bootcamp.feeds.urls')),
-    url(r'^settings/', include('bootcamp.core.urls')),
-    url(r'^articles/', include('bootcamp.articles.urls')),
-    url(r'^messages/', include('bootcamp.messenger.urls')),
-    url(r'^questions/', include('bootcamp.questions.urls')),
-    url(r'^notifications/', include('bootcamp.activities.urls')),
+    path('feeds/', include('bootcamp.feeds.urls')),
+    path('settings/', include('bootcamp.core.urls')),
+    path('articles/', include('bootcamp.articles.urls')),
+    path('messages/', include('bootcamp.messenger.urls')),
+    path('questions/', include('bootcamp.questions.urls')),
+    path('notifications/', include('bootcamp.activities.urls')),
 
-    url(r'^search/$', search_views.search, name='search'),
-    url(r'^network/$', core_views.network, name='network'),
+    path('search/', search_views.search, name='search'),
+    path('network/', core_views.network, name='network'),
 
-    url(r'^graphql$', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 
-    url(r'^(?P<username>[^/]+)/$', core_views.profile, name='profile'),
+    path('<str:username>/', core_views.profile, name='profile'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
