@@ -31,9 +31,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', core_views.home, name='home'),
-    path('login', auth_views.login,
-         {'template_name': 'core/cover.html'}, name='login'),
-    path('logout', auth_views.logout, {'next_page': '/'}, name='logout'),
+    path('login', auth_views.LoginView.as_view(template_name='core/cover.html'), name='login'),
+    path('logout', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     path('signup/', authentication_views.signup, name='signup'),
 
     path('feeds/', include('bootcamp.feeds.urls')),

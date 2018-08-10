@@ -1,6 +1,6 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
 from django.utils.translation import ugettext_lazy as _
 
 from bootcamp.feeds.models import Feed
