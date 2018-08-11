@@ -6,8 +6,8 @@
 
 
 [![python](https://img.shields.io/badge/python-3.7-green.svg)](https://python.org)
-[![django](https://img.shields.io/badge/django-2.1-green.svg)](https://djangoproject.org)
-[![graphql](https://img.shields.io/badge/graphene--django-2.1-green.svg)](https://djangoproject.org)
+[![django](https://img.shields.io/badge/django-2.1-green.svg)](https://www.djangoproject.com/)
+[![graphql](https://img.shields.io/badge/graphene--django-2.1-green.svg)](https://github.com/graphql-python/graphene-django)
 
 Bootcamp 学习 Django 和其它一些技术过程中的实践网站
 
@@ -21,6 +21,7 @@ https://bootcamp.qulc.me/
 * GraphQL 的支持
 * i18n 的国际化支持
 * 支持游客身份访问
+* 使用 cloudinary 服务处理图像
 * 添加了单元测试和 CI 自动化部署
 * 升级兼容最新的版本的 Django 和 Python
 
